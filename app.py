@@ -15,8 +15,6 @@ app = FastAPI()
 
 # define the input data model
 class Customer(BaseModel):
-    gender: int
-    age: int
     income: int
     spending_score: int
 
@@ -38,12 +36,7 @@ def home():
 @app.post('/predict_cluster')
 def predict_cluster(customer: Customer):
     
-    data = pd.DataFrame([[
-        customer.gender,
-        customer.age,
-        customer.income,
-        customer.spending_score
-    ]], columns=['Gender', 'Age', 'Annual Income (k$)', 'Spending Score (1-100)'])
+    data = pd.DataFrame([[customer.income, customer.spending_score ]], columns=['Annual Income (k$)', 'Spending Score (1-100)'])
     
     scaled = scaler.transform(data)
     cluster = kmeans.predict(scaled)[0]

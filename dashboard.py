@@ -18,25 +18,25 @@ df['Gender'] = df['Gender'].map({'Male': 0, 'Female': 1})
 
 # Cluster names
 cluster_names = {
-    0: 'Mature Low Spenders 😴',
-    1: 'Rich but Stingy 💰',
-    2: 'Young Active Buyers 🛍️',
-    3: 'VIP Customers 💎',
-    4: 'Impulsive Spenders 🤑'
+    0: 'Mature Low Spenders ',
+    1: 'Rich but Stingy ',
+    2: 'Young Active Buyers ',
+    3: 'VIP Customers ',
+    4: 'Impulsive Spenders '
 }
 
 # Clusters add karo
-X = scaler.transform(df)
+X = scaler.transform(df[['Annual Income (k$)', 'Spending Score (1-100)']])
 df['Cluster'] = kmeans.predict(X)
 df['Segment'] = df['Cluster'].map(cluster_names)
 
 # ─── Dashboard UI ───
 
-st.title('🛍️ Customer Segmentation Dashboard')
+st.title('Customer Segmentation Dashboard')
 st.markdown('K-Means Clustering on Mall Customers Dataset')
 
 # ─── Section 1: Cluster Distribution ───
-st.header('📊 Cluster Distribution')
+st.header('Cluster Distribution')
 
 count_df = df['Segment'].value_counts().reset_index()
 count_df.columns = ['Segment', 'Count']
@@ -51,7 +51,7 @@ fig1 = px.bar(
 st.plotly_chart(fig1, use_container_width=True)
 
 # ─── Section 2: 2D Scatter Plot ───
-st.header('💡 Income vs Spending Score')
+st.header(' Income vs Spending Score')
 
 fig2 = px.scatter(
     df,
@@ -64,7 +64,7 @@ fig2 = px.scatter(
 st.plotly_chart(fig2, use_container_width=True)
 
 # ─── Section 3: 3D Plot ───
-st.header('🌐 3D Visualization')
+st.header(' 3D Visualization')
 
 fig3 = px.scatter_3d(
     df,
@@ -77,14 +77,14 @@ fig3 = px.scatter_3d(
 st.plotly_chart(fig3, use_container_width=True)
 
 # ─── Section 4: Cluster Summary ───
-st.header('📋 Cluster Summary')
+st.header('Cluster Summary')
 
 summary = df.groupby('Segment').mean(numeric_only=True).round(1)
 summary = summary.drop('Cluster', axis=1)
 st.dataframe(summary)
 
 # ─── Section 5: Predict New Customer ───
-st.header('🔮 Predict New Customer Segment')
+st.header('Predict New Customer Segment')
 
 col1, col2 = st.columns(2)
 
@@ -99,11 +99,9 @@ with col2:
 if st.button('Predict Segment'):
     gender_val = 0 if gender == 'Male' else 1
     
-    new_data = pd.DataFrame([[gender_val, age, income, spending]],
-                columns=['Gender', 'Age', 
-                         'Annual Income (k$)', 
-                         'Spending Score (1-100)'])
-    
+    new_data = pd.DataFrame([[income, spending]],
+            columns=['Annual Income (k$)', 
+                     'Spending Score (1-100)'])
     scaled = scaler.transform(new_data)
     cluster = kmeans.predict(scaled)[0]
     
