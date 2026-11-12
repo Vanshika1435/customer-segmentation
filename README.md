@@ -2,6 +2,12 @@
 
 An interactive machine learning application that groups customers into distinct segments based on their purchasing behavior and spending patterns. The project uses K-Means clustering and an interactive Streamlit dashboard to explore customer groups and predict the segment of a new customer.
 
+## Live Demo
+
+**[Launch Customer Segmentation Dashboard](https://customer-segmentation-rkd6.onrender.com/)**
+
+Explore customer clusters, interactive visualizations, and predict customer segments based on annual income and spending score.
+
 ## Overview
 
 Customer segmentation is an important technique in data analytics and marketing. It helps businesses understand customer behavior, identify different customer groups, and make data-driven decisions.
@@ -202,9 +208,9 @@ http://localhost:8501
 
 ## Deployment
 
-The interactive dashboard is deployed using Streamlit Community Cloud.
+The interactive Streamlit dashboard is deployed on **Render**.
 
-**Live Application:** Add the Streamlit deployment URL here after deployment is successful.
+**Live Application:** https://customer-segmentation-rkd6.onrender.com/
 
 **Source Code:** https://github.com/Vanshika1435/customer-segmentation
 
